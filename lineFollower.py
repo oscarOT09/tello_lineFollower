@@ -7,10 +7,10 @@ me = tello.Tello()
 me.connect()
 print(me.get_battery())
 me.streamon()
-#me.takeoff()
+me.takeoff()
 
 #cap = cv2.VideoCapture(0)
-hsvVals = [21,107,129,35,145,205]  # Encontrar vector de valores con el código "ColorPicker.py"
+hsvVals = [20,137,172,151,205,255]  # Encontrar vector de valores con el código "ColorPicker.py"
 sensors = 3
 threshold = 0.2
 width, height = 480, 360
@@ -81,12 +81,12 @@ while True:
     #_, img = cap.read()
     img = me.get_frame_read().frame
     img = cv2.resize(img,(width,height)) # El ancho de la imagen debe ser divisible entre la cantidad de "sensors"
-    #img = cv2.flip(img,0)
+    img = cv2.flip(img,0)
 
     imgThres = thresholding(img)
     cx = getContours(imgThres,img)  # Esto es para traslación
     senOut = getSensorOutput(imgThres, sensors) # Esto es para rotación
-    #sendCommands(senOut,cx)
+    sendCommands(senOut,cx)
     cv2.imshow("Output",img)
     cv2.imshow("Path", imgThres)
     cv2.waitKey(1)
